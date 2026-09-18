@@ -1,2 +1,19 @@
 HYPIT_BASE_URL=https://hypit.ai/v1
 HYPIT_API_KEY=sk-hh-qfhidcsj3uVBVElur5wIgtXjUHR_AU98
+
+curl https://hypit.ai/v1/models \
+  -H "Authorization: Bearer $HYPIT_API_KEY"
+
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ["HYPIT_API_KEY"],
+    base_url=os.environ["HYPIT_BASE_URL"],
+)
+
+reply = client.chat.completions.create(
+    model="gemini-3.1-pro",
+    messages=[{"role": "user", "content": "Hello from hypit.ai"}],
+)
+print(reply.choices[0].message.content)
